@@ -1,0 +1,254 @@
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    /*max-width: 1200px;*/
+    width: 90%;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.main-content {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.piano-section {
+    flex: 1;
+    width: 80%;
+}
+
+.sheet-music-section {
+    flex: 1;
+    min-width: 400px;
+    width: 80%;
+}
+
+.piano-container {
+    position: relative;
+    margin: 20px 0;
+}
+
+.piano {
+    display: flex;
+    max-width: 1400px;
+    background: #333;
+    padding: 20px;
+    padding-top: 50px;;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    justify-content: center;
+}
+
+.key {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    border-radius: 0 0 8px 8px;
+    user-select: none;
+}
+
+.white-key {
+    width: 40px;
+    height: 200px;
+    background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
+    border: 2px solid #ddd;
+    border-top: none;
+    margin: 0 1px;
+}
+
+.white-key:hover {
+    background: linear-gradient(to bottom, #e3f2fd 0%, #bbdefb 100%);
+    transform: translateY(2px);
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.4);
+}
+
+.white-key.active {
+    background: linear-gradient(to bottom, #2196f3 0%, #1976d2 100%);
+    transform: translateY(2px);
+    color: white;
+}
+
+.black-key {
+    width: 28px;
+    height: 120px;
+    background: linear-gradient(to bottom, #333 0%, #111 100%);
+    position: absolute;
+    z-index: 2;
+}
+
+.black-key:hover {
+    background: linear-gradient(to bottom, #444 0%, #222 100%);
+    transform: translateY(2px);
+}
+
+.black-key.active {
+    background: linear-gradient(to bottom, #ff9800 0%, #f57c00 100%);
+    transform: translateY(2px);
+}
+
+.note-label {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.key:hover .note-label {
+    opacity: 1;
+}
+
+.key.active .note-label {
+    opacity: 1;
+    color: white;
+}
+
+.sheet-music {
+    position: relative;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+.staff {
+    position: relative;
+    margin: 40px 0;
+}
+
+.staff-lines {
+    height: 80px;
+}
+
+.staff-line {
+    width: 100%;
+    height: 1px;
+    background: #333;
+    position: absolute;
+}
+
+.treble-clef .staff-line:nth-child(1) { top: 0; }
+.treble-clef .staff-line:nth-child(2) { top: 20px; }
+.treble-clef .staff-line:nth-child(3) { top: 40px; }
+.treble-clef .staff-line:nth-child(4) { top: 60px; }
+.treble-clef .staff-line:nth-child(5) { top: 80px; }
+
+.bass-clef .staff-line:nth-child(1) { top: 0; }
+.bass-clef .staff-line:nth-child(2) { top: 20px; }
+.bass-clef .staff-line:nth-child(3) { top: 40px; }
+.bass-clef .staff-line:nth-child(4) { top: 60px; }
+.bass-clef .staff-line:nth-child(5) { top: 80px; }
+
+.clef-symbol {
+    position: absolute;
+    left: 10px;
+    color: #333;
+}
+
+.treble-clef .clef-symbol {
+    top: -60px;
+    font-size: 160px;
+}
+
+.bass-clef .clef-symbol {
+    top: -25px;
+    font-size: 95px;
+}
+
+.note {
+    position: absolute;
+    width: 20px;
+    height: 15px;
+    background: #333;
+    border-radius: 50%;
+    left: 120px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    transform: scale(0.8);
+}
+
+.note.visible {
+    opacity: 1;
+    transform: scale(1);
+    animation: noteAppear 0.3s ease-out;
+}
+
+@keyframes noteAppear {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.current-note-display {
+    text-align: center;
+    padding: 15px;
+    background: rgba(33, 150, 243, 0.1);
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.current-note {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1976d2;
+    margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+    }
+    
+    .piano-section,
+    .sheet-music-section {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .white-key {
+        width: 30px;
+        height: 150px;
+    }
+    
+    .black-key {
+        width: 20px;
+        height: 90px;
+    }
+}
